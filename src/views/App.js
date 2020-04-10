@@ -7,7 +7,7 @@ import "./App.scss";
 
 export default function App() {
   const [nav, setNav] = useState(false);
-  const { height: winHeight } = resizeCheck();
+  // const { height: winHeight } = resizeCheck();
 
   const introText = "Hello. I'm James Ra.";
   const IntroText = introText.split("").map(letter => {
@@ -17,25 +17,27 @@ export default function App() {
   })
 
   const navCheck = function() {
-    if (document.scrollingElement.scrollTop > winHeight && nav === false) {
+    const scroll = document.scrollingElement.scrollTop;
+    const { innerHeight: winH } = window;
+
+    if (scroll > winH && nav === false) {
       setNav(true);
       document.getElementById("nav").style.animation = 'navDown 1s forwards';
-    } else if (document.scrollingElement.scrollTop < winHeight && nav === true) {
+    } else if (scroll < winH && nav === true) {
       setNav(false);
       document.getElementById("nav").style.animation = 'navUp 1s forwards';
     }
   }
 
-  var textWrapper = document.querySelector('.ml10 .letters');
-  console.log(textWrapper);
-
-  anime.timeline({loop: false})
+  useEffect(() => {
+    anime.timeline({loop: false})
     .add({
       targets: '.ml10 .letter',
       rotateY: [-90, 0],
       duration: 2000,
-      delay: (el, i) => 50 * i
-    });
+      delay: (el, i) => 50 * i + 1000
+    })
+  }, []);
 
   window.addEventListener("scroll", navCheck);
 

@@ -38,7 +38,8 @@ main {
   grid-column: 1/2;
   grid-row: 1/2;
 
-  background-color: red;
+  background-image: url("../assets/img/intro-bg.jpg");
+  background-size: cover;
 }
 
 .A-about {
